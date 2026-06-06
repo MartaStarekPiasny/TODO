@@ -143,7 +143,7 @@ Projekt wykonany w ramach nauki pracy z metodyką Scrum.
 ![Diagram klas](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/blob/main/diagram_klas.puml)
 
 ### Diagram przypadków użycia
-![Diagram przypadków użycia](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/blob/main/diagram_przypadkow.puml)
+![Diagram przypadków użycia](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/blob/main/diagram_przypadkow_uzycia.puml)
 
 ### Schemat bazy danych
-![Schemat bazy danych](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/blob/main/schema_bazy.puml)
+![Schemat bazy danych](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/blob/main/schemat_bazy.puml)
