@@ -1,26 +1,41 @@
 # ToDo App (Django + Docker)
 
-## Opis projektu
-
-Aplikacja webowa typu ToDo stworzona w frameworku Django. Umożliwia zarządzanie zadaniami, ich kategoryzację, wyszukiwanie oraz eksport danych do pliku CSV. Aplikacja zawiera również system powiadomień informujących użytkownika o wykonanych operacjach.
-
-Projekt uruchamiany jest w środowisku Docker.
-
----
-
-## Stos technologiczny
-
-- **Backend:** Python, Django
-- **Baza danych:** SQLite3
-- **Infrastruktura:** Docker, Docker Compose
-- **Frontend:** Szablony HTML, CSS (pliki statyczne)
+## 📖 Spis treści
+- [Opis projektu](#opis-projektu)
+- [Architektura i stos technologiczny](#architektura-i-stos-technologiczny)
+- [Uruchomienie aplikacji](#uruchomienie-aplikacji)
+- [Zarządzanie i Panel Administratora](#zarządzanie-i-panel-administratora)
+- [Struktura projektu](#struktura-projektu)
+- [Funkcjonalności](#funkcjonalności)
+- [Testowanie i weryfikacja](#testowanie-i-weryfikacja)
+- [Metodyka pracy i Zespół](#metodyka-pracy-i-zespół)
 
 ---
 
-## Uruchomienie aplikacji
+## 📝 Opis projektu
+
+Aplikacja webowa typu ToDo stworzona przy użyciu frameworka Django, oparta na wzorcu architektonicznym **MTV (Model-Template-View)**. Narzędzie umożliwia kompleksowe zarządzanie zadaniami (CRUD), ich kategoryzację, zaawansowane filtrowanie oraz generowanie raportów do formatu CSV. Aplikacja została wyposażona w interaktywny system powiadomień informujących użytkownika o statusie realizowanych operacji.
+
+Całość środowiska deweloperskiego i produkcyjnego została skonteneryzowana przy użyciu platformy Docker, co gwarantuje spójność działania aplikacji niezależnie od maszyny hosta, izolację zależności oraz łatwość wdrażania (Deployment).
+
+---
+
+## 🛠 Architektura i stos technologiczny
+
+Projekt wykorzystuje nowoczesny stos technologiczny, zapewniający skalowalność i bezpieczeństwo:
+- **Język programowania:** Python 3
+- **Framework Backendowy:** Django (architektura MTV, wbudowany system ORM)
+- **Baza danych:** SQLite3 (lekka relacyjna baza danych, idealna do środowiska deweloperskiego)
+- **Infrastruktura i konteneryzacja:** Docker, Docker Compose
+- **Frontend:** Szablony Django (Django Templates), HTML5, CSS3
+
+---
+
+## 🚀 Uruchomienie aplikacji
 
 ### Wymagania
 
+- System operacyjny: Windows / macOS / Linux
 - Docker  
 - Docker Compose  
 
