@@ -1,0 +1,46 @@
+@startuml
+title TaskFlow - Diagram klas UML
+
+class User {
+    + id: int
+    + username: string
+    + email: string
+    + password: string
+    + is_active: boolean
+    + date_joined: datetime
+}
+
+class Category {
+    + id: int
+    + name: string
+    + owner: User
+    --
+    + create()
+    + update()
+    + delete()
+}
+
+class Task {
+    + id: int
+    + title: string
+    + description: text
+    + status: string
+    + priority: string
+    + due_date: date
+    + created_at: datetime
+    + updated_at: datetime
+    + owner: User
+    + category: Category
+    --
+    + create()
+    + update()
+    + delete()
+    + changeStatus()
+    + exportToCSV()
+}
+
+User "1" -- "0..*" Category : tworzy >
+User "1" -- "0..*" Task : posiada >
+Category "1" -- "0..*" Task : grupuje >
+
+@endum

@@ -1,0 +1,43 @@
+@startuml
+title TODO - Schemat bazy danych
+
+' Ustawienie notacji Crow's Foot
+skinparam microfilm off
+
+entity "auth_user" as auth_user {
+    * id : integer <<PK>>
+    --
+    username : varchar
+    email : varchar
+    password : varchar
+    is_active : boolean
+    date_joined : datetime
+}
+
+entity "tasks_category" as tasks_category {
+    * id : integer <<PK>>
+    --
+    name : varchar
+    user_id : integer <<FK>>
+}
+
+entity "tasks_task" as tasks_task {
+    * id : integer <<PK>>
+    --
+    title : varchar
+    description : text
+    status : varchar
+    priority : varchar
+    due_date : date
+    created_at : datetime
+    updated_at : datetime
+    user_id : integer <<FK>>
+    category_id : integer <<FK>>
+}
+
+' Relacje z uwzględnieniem liczności 1 do 1..N
+auth_user ||--|{ tasks_category : "1..N"
+auth_user ||--|{ tasks_task : "1..N"
+tasks_category ||--|{ tasks_task : "1..N"
+
+@endum

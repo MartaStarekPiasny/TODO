@@ -136,3 +136,14 @@ Projekt wykonany w ramach nauki pracy z metodyką Scrum.
 5. Łukasz Rosicki
 6. Marta Starek-Piasny
 7. Ryszard Wasilewski
+
+## 11. Dokumentacja graficzna (UML)
+
+### Diagram klas
+![Diagram klas](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/main/diagram_klas.puml)
+
+### Diagram przypadków użycia
+![Diagram przypadków użycia](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/main/diagram_przypadkow.puml)
+
+### Schemat bazy danych
+![Schemat bazy danych](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/lukaszrosicki/TODO/main/schema_bazy.puml)

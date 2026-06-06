@@ -1,0 +1,63 @@
+@startuml
+title TODO - Diagram przypadków użycia
+
+left to right direction
+
+actor "Gość" as g
+actor "Zalogowany użytkownik" as u
+
+rectangle TaskFlow {
+    usecase "Zaloguj się" as uc_login
+    usecase "Zarejestruj konto" as uc_register
+    usecase "Przełącz tryb jasny/ciemny" as uc_theme
+    usecase "Eksportuj zadania do CSV" as uc_export
+    usecase "Wyloguj się" as uc_logout
+    usecase "Dodaj zadanie" as uc_add_task
+    usecase "Edytuj zadanie" as uc_edit_task
+    usecase "Ustaw termin wykonania" as uc_set_date
+    usecase "Wyszukaj zadanie" as uc_search
+    usecase "Filtruj zadania" as uc_filter
+    usecase "Usuń zadanie" as uc_delete_task
+    usecase "Zmień status zadania" as uc_change_status
+    usecase "Ustaw priorytet" as uc_set_priority
+    usecase "Przypisz kategorię" as uc_assign_category
+    usecase "Wyświetl listę zadań" as uc_list_tasks
+    usecase "Dodaj kategorię" as uc_add_category
+}
+
+' Relacje dla aktora Gość
+g --> uc_login
+g --> uc_register
+g --> uc_theme
+
+' Relacje dla aktora Zalogowany użytkownik
+u --> uc_theme
+u --> uc_export
+u --> uc_logout
+u --> uc_add_task
+u --> uc_edit_task
+u --> uc_set_date
+u --> uc_search
+u --> uc_filter
+u --> uc_delete_task
+u --> uc_change_status
+u --> uc_set_priority
+u --> uc_assign_category
+u --> uc_list_tasks
+u --> uc_add_category
+
+' Relacje typu <<include>>
+uc_export ..> uc_list_tasks : <<include>>
+uc_add_task ..> uc_list_tasks : <<include>>
+uc_edit_task ..> uc_list_tasks : <<include>>
+uc_set_date ..> uc_list_tasks : <<include>>
+uc_search ..> uc_list_tasks : <<include>>
+uc_filter ..> uc_list_tasks : <<include>>
+uc_delete_task ..> uc_list_tasks : <<include>>
+uc_change_status ..> uc_list_tasks : <<include>>
+uc_set_priority ..> uc_list_tasks : <<include>>
+uc_assign_category ..> uc_list_tasks : <<include>>
+
+uc_assign_category ..> uc_add_category : <<include>>
+
+@endum
