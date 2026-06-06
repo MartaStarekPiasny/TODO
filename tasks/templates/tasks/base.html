@@ -48,6 +48,58 @@
             transform: scale(1.01);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
+
+        .app-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sidebar-card {
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .sidebar-card .list-group-item {
+            border: none;
+            border-bottom: 1px solid #eee;
+            padding: 12px 16px;
+        }
+
+        .sidebar-card .list-group-item:hover {
+            background-color: #fff3cd;
+            color: #d97706;
+        }
+
+        .task-list-card {
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .task-item {
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background-color: white;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .task-actions .btn {
+            border-radius: 8px;
+        }
+
+        .task-meta {
+            margin-top: 12px;
+        }
+
+        .overdue-task {
+            background-color: #fff1f2;
+            border-left: 5px solid #dc3545;
+        }
     </style>
 </head>
 
@@ -71,7 +123,14 @@
                         Zadania
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'categories' %}">
+                        Kategorie
+                    </a>
+                </li>
             </ul>
+
 
             <!-- PRAWA STRONA -->
             <div class="d-flex gap-2 align-items-center">

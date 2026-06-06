@@ -2,19 +2,68 @@
 
 {% block content %}
 
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
     <div class="card-header bg-primary text-white">
         Szczegóły zadania
     </div>
 
     <div class="card-body">
-        <h4>Przygotować projekt Django</h4>
-        <p class="text-muted">Opis zadania...</p>
+        <h4>{{ task.title }}</h4>
 
-        <p><strong>Status:</strong> Do zrobienia</p>
-        <p><strong>Priorytet:</strong> Wysoki</p>
-        <p><strong>Kategoria:</strong> Studia</p>
-        <p><strong>Termin:</strong> 2026-05-01</p>
+        <p class="text-muted">
+            {{ task.description }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ task.get_status_display }}
+        </p>
+
+        <p>
+            <strong>Priorytet:</strong>
+            {{ task.get_priority_display }}
+        </p>
+
+        <p>
+            <strong>Kategoria:</strong>
+            {% if task.category %}
+                {{ task.category.name }}
+            {% else %}
+                Brak kategorii
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Termin:</strong>
+            {% if task.due_date %}
+                {{ task.due_date }}
+            {% else %}
+                Brak terminu
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Wykonane:</strong>
+            {% if task.is_completed %}
+                Tak
+            {% else %}
+                Nie
+            {% endif %}
+        </p>
+
+        <div class="d-flex gap-2 mt-4">
+            <a href="{% url 'task_edit' task.id %}" class="btn btn-warning text-dark">
+                Edytuj
+            </a>
+
+            <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">
+                Usuń
+            </a>
+
+            <a href="{% url 'index' %}" class="btn btn-secondary">
+                Wróć
+            </a>
+        </div>
     </div>
 </div>
 
