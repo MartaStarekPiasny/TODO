@@ -1,16 +1,21 @@
-from django.shortcuts import render, redirect, get_object_or_404
+import csv
+from datetime import date
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+
 from .forms import RegisterForm, TaskForm, CategoryForm
 from .models import Task, Category
-from datetime import date
 
 
 @login_required
 def index(request):
     categories = Category.objects.filter(user=request.user)
+
     selected_category_id = request.GET.get("category")
+    query = request.GET.get("q")
 
     tasks = Task.objects.filter(user=request.user).order_by("-created_at")
     selected_category = None
@@ -23,12 +28,17 @@ def index(request):
         )
         tasks = tasks.filter(category=selected_category)
 
+    if query and query.strip():
+        tasks = tasks.filter(title__icontains=query.strip())
+
     return render(request, "tasks/index.html", {
         "tasks": tasks,
         "categories": categories,
         "selected_category": selected_category,
-        "today": date.today()
+        "today": date.today(),
+        "query": query
     })
+
 
 @login_required
 def task_create(request):
@@ -48,6 +58,7 @@ def task_create(request):
     return render(request, "tasks/task_form.html", {
         "form": form
     })
+
 
 @login_required
 def category_create(request):
@@ -70,6 +81,7 @@ def category_create(request):
         "form": form,
         "next": next_url
     })
+
 
 @login_required
 def category_edit(request, category_id):
@@ -104,6 +116,7 @@ def category_delete(request, category_id):
     return render(request, "tasks/category_delete.html", {
         "category": category
     })
+
 
 @login_required
 def categories(request):
@@ -176,6 +189,59 @@ def task_toggle(request, task_id):
     task.save()
 
     return redirect("index")
+
+
+import csv
+from django.http import HttpResponse
+
+
+@login_required
+def export_csv(request):
+    import csv
+    from django.http import HttpResponse
+
+    tasks = Task.objects.filter(user=request.user)
+
+    category_id = request.GET.get("category")
+    query = request.GET.get("q")
+
+    if category_id:
+        tasks = tasks.filter(category_id=category_id)
+
+    if query and query.strip() and query != "None":
+        tasks = tasks.filter(title__icontains=query.strip())
+
+    response = HttpResponse(content_type="text/csv; charset=utf-8")
+    response["Content-Disposition"] = 'attachment; filename="tasks.csv"'
+
+    response.write('\ufeff')
+
+    writer = csv.writer(response, delimiter=';')
+
+    writer.writerow([
+        "Tytuł",
+        "Opis",
+        "Status",
+        "Priorytet",
+        "Kategoria",
+        "Termin",
+        "Wykonane",
+        "Data utworzenia"
+    ])
+
+    for task in tasks:
+        writer.writerow([
+            task.title,
+            task.description,
+            task.get_status_display(),
+            task.get_priority_display(),
+            task.category.name if task.category else "",
+            task.due_date if task.due_date else "",
+            "Tak" if task.is_completed else "Nie",
+            task.created_at.strftime("%Y-%m-%d %H:%M") if task.created_at else ""
+        ])
+
+    return response
 
 
 def register(request):

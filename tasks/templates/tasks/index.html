@@ -4,14 +4,45 @@
 
 <h1 class="text-center mb-4">Lista zadań</h1>
 
-<div class="d-flex justify-content-end mb-3 app-layout">
-    <a href="{% url 'task_create' %}" class="btn btn-main">
-        + Dodaj zadanie
-    </a>
+<!-- GÓRNY PANEL: wyszukiwarka + przyciski -->
+<div class="d-flex justify-content-between mb-3 app-layout flex-wrap gap-2">
+
+    <!-- WYSZUKIWARKA -->
+    <form method="get" class="d-flex gap-2 w-50">
+
+        <input type="text" name="q" value="{{ query|default:'' }}"
+               class="form-control"
+               placeholder="Szukaj zadania po tytule...">
+
+        {% if selected_category %}
+        <input type="hidden" name="category" value="{{ selected_category.id }}">
+        {% endif %}
+
+        <button class="btn btn-primary">
+            Szukaj
+        </button>
+
+    </form>
+
+    <!-- PRZYCISKI -->
+    <div class="d-flex gap-2">
+
+        <a href="{% url 'export_csv' %}{% if query or selected_category %}?{% endif %}{% if query %}q={{ query }}{% endif %}{% if query and selected_category %}&{% endif %}{% if selected_category %}category={{ selected_category.id }}{% endif %}"
+           class="btn btn-success">
+            Eksport CSV
+        </a>
+
+        <a href="{% url 'task_create' %}" class="btn btn-main">
+            + Dodaj zadanie
+        </a>
+
+    </div>
+
 </div>
 
 <div class="row app-layout">
 
+    <!-- SIDEBAR -->
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm border-0 sidebar-card">
             <div class="card-header bg-primary text-white">
@@ -24,11 +55,11 @@
                 </a>
 
                 {% for category in categories %}
-                    <a href="{% url 'index' %}?category={{ category.id }}" class="list-group-item list-group-item-action">
-                        {{ category.name }}
-                    </a>
+                <a href="{% url 'index' %}?category={{ category.id }}" class="list-group-item list-group-item-action">
+                    {{ category.name }}
+                </a>
                 {% empty %}
-                    <span class="list-group-item text-muted">
+                <span class="list-group-item text-muted">
                         Brak kategorii
                     </span>
                 {% endfor %}
@@ -36,14 +67,15 @@
         </div>
     </div>
 
+    <!-- GŁÓWNA CZĘŚĆ -->
     <div class="col-md-9">
 
         <div class="card shadow-sm border-0 task-list-card">
             <div class="card-header bg-primary text-white">
                 {% if selected_category %}
-                    Zadania: {{ selected_category.name }}
+                Zadania: {{ selected_category.name }}
                 {% else %}
-                    Twoje zadania
+                Twoje zadania
                 {% endif %}
             </div>
 
@@ -56,7 +88,9 @@
                 {% endif %}
                 ">
 
+                    <!-- GÓRA -->
                     <div class="d-flex justify-content-between align-items-center">
+
                         <h5 class="mb-1
                             {% if task.is_completed %}
                                 text-decoration-line-through text-muted
@@ -68,52 +102,68 @@
                         </h5>
 
                         {% if task.status == "todo" %}
-                            <span class="badge bg-secondary">
+                        <span class="badge bg-secondary">
                                 ⏳ {{ task.get_status_display }}
                             </span>
                         {% elif task.status == "in_progress" %}
-                            <span class="badge bg-warning text-dark">
+                        <span class="badge bg-warning text-dark">
                                 🔄 {{ task.get_status_display }}
                             </span>
                         {% elif task.status == "done" %}
-                            <span class="badge bg-success">
+                        <span class="badge bg-success">
                                 ✅ {{ task.get_status_display }}
                             </span>
                         {% endif %}
+
                     </div>
 
+                    <!-- OPIS -->
                     <p class="text-muted mb-2">
                         {{ task.description }}
                     </p>
 
+                    <!-- DÓŁ -->
                     <div class="d-flex justify-content-between align-items-center flex-wrap">
 
                         <small class="text-muted task-meta">
-                            Priorytet:
+
+                            <!-- KATEGORIA -->
+                            Kategoria:
+                            {% if task.category %}
+                            <span class="badge bg-info text-dark">
+            {{ task.category.name }}
+        </span>
+                            {% else %}
+                            <span class="text-muted">Brak</span>
+                            {% endif %}
+
+                            | Priorytet:
 
                             {% if task.priority == "low" %}
-                                <span class="badge bg-success">
-                                    {{ task.get_priority_display }}
-                                </span>
+                            <span class="badge bg-success">
+            {{ task.get_priority_display }}
+        </span>
                             {% elif task.priority == "medium" %}
-                                <span class="badge bg-warning text-dark">
-                                    {{ task.get_priority_display }}
-                                </span>
+                            <span class="badge bg-warning text-dark">
+            {{ task.get_priority_display }}
+        </span>
                             {% elif task.priority == "high" %}
-                                <span class="badge bg-danger">
-                                    {{ task.get_priority_display }}
-                                </span>
+                            <span class="badge bg-danger">
+            {{ task.get_priority_display }}
+        </span>
                             {% endif %}
 
                             {% if task.due_date %}
-                                | Termin: {{ task.due_date }}
+                            | Termin: {{ task.due_date }}
 
-                                {% if task.due_date < today %}
-                                    <span class="text-danger fw-bold"> (po terminie)</span>
-                                {% endif %}
+                            {% if task.due_date < today %}
+                            <span class="text-danger fw-bold"> (po terminie)</span>
                             {% endif %}
+                            {% endif %}
+
                         </small>
 
+                        <!-- PRZYCISKI -->
                         <div class="task-actions">
 
                             <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-primary">
@@ -130,9 +180,9 @@
 
                             <a href="{% url 'task_toggle' task.id %}" class="btn btn-sm btn-success">
                                 {% if task.is_completed %}
-                                    Cofnij
+                                Cofnij
                                 {% else %}
-                                    Zrobione
+                                Zrobione
                                 {% endif %}
                             </a>
 
@@ -142,7 +192,7 @@
                 </div>
 
                 {% empty %}
-                    <p class="text-muted">Brak zadań. Dodaj pierwsze zadanie.</p>
+                <p class="text-muted">Brak zadań.</p>
                 {% endfor %}
 
             </div>
