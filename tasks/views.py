@@ -186,13 +186,16 @@ def task_toggle(request, task_id):
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     task.is_completed = not task.is_completed
+
+
+    if task.is_completed:
+        task.status = "done"
+    else:
+        task.status = "in_progress"
+
     task.save()
 
     return redirect("index")
-
-
-import csv
-from django.http import HttpResponse
 
 
 @login_required

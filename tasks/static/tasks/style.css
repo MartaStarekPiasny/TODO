@@ -1,0 +1,152 @@
+:root {
+    --main-color: #f59e0b;
+    --main-dark: #d97706;
+    --bg-light: #fffaf3;
+}
+
+body {
+    background-color: var(--bg-light);
+}
+
+.btn-main {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+}
+
+.btn-main:hover {
+    background-color: var(--main-dark);
+    color: white;
+}
+
+.card-custom {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.title-accent {
+    color: var(--main-color);
+    font-weight: 600;
+}
+
+.card-task {
+    transition: 0.2s;
+}
+
+.card-task:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.app-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sidebar-card {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.sidebar-card .list-group-item {
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 12px 16px;
+}
+
+.sidebar-card .list-group-item:hover {
+    background-color: #fff3cd;
+    color: #d97706;
+}
+
+.task-list-card {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.task-item {
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    background-color: white;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.task-actions .btn {
+    border-radius: 8px;
+}
+
+.task-meta {
+    margin-top: 12px;
+}
+
+.overdue-task {
+    background-color: #fff1f2;
+    border-left: 5px solid #dc3545;
+}
+
+.dark-theme {
+    background-color: #111827 !important;
+    color: #f9fafb;
+}
+
+.dark-theme .navbar {
+    background-color: #1f2937 !important;
+}
+
+.dark-theme .nav-link,
+.dark-theme .navbar-brand,
+.dark-theme .title-accent {
+    color: #fbbf24 !important;
+}
+
+.dark-theme .card,
+.dark-theme .task-item,
+.dark-theme .list-group-item {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+}
+
+.dark-theme .card-header {
+    background-color: #374151 !important;
+    color: #ffffff !important;
+}
+
+.dark-theme .text-muted {
+    color: #d1d5db !important;
+}
+
+.dark-theme .sidebar-card .list-group-item {
+    border-bottom: 1px solid #374151;
+}
+
+.dark-theme .sidebar-card .list-group-item:hover {
+    background-color: #374151 !important;
+    color: #fbbf24 !important;
+}
+
+.dark-theme .form-control,
+.dark-theme .form-select {
+    background-color: #111827;
+    color: #f9fafb;
+    border-color: #4b5563;
+}
+
+.dark-theme .form-control::placeholder {
+    color: #9ca3af;
+}
+
+.dark-theme footer {
+    color: #d1d5db !important;
+}
+
+.dark-theme .overdue-task {
+    background-color: #3f1d2a !important;
+    border-left: 5px solid #dc3545;
+}
