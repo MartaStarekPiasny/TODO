@@ -5,12 +5,12 @@
 <h1 class="text-center mb-4">Lista zadań</h1>
 
 <div class="d-flex justify-content-end mb-3">
-    <a href="{% url 'task_create' %}" class="btn btn-primary">
+    <a href="{% url 'task_create' %}" class="btn btn-main">
         + Dodaj zadanie
     </a>
 </div>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
     <div class="card-header bg-primary text-white">
         Twoje zadania
     </div>
@@ -18,50 +18,99 @@
     <div class="card-body">
 
         {% for task in tasks %}
-        <div class="mb-3 p-3 border rounded bg-white">
+        <div class="mb-3 p-3 rounded shadow-sm card-task
+        {% if task.due_date and task.due_date < today %}
+            bg-danger bg-opacity-10
+        {% else %}
+            bg-white
+        {% endif %}
+        ">
 
-            <div class="d-flex justify-content-between">
-                <h5 class="mb-1 {% if task.is_completed %}text-decoration-line-through text-muted{% endif %}">
+            <!-- GÓRA -->
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- TYTUŁ -->
+                <h5 class="mb-1
+                    {% if task.is_completed %}
+                        text-decoration-line-through text-muted
+                    {% else %}
+                        fw-bold
+                    {% endif %}
+                ">
                     {{ task.title }}
                 </h5>
 
-                <span class="badge bg-secondary">
-                        {{ task.get_status_display }}
+                <!-- STATUS -->
+                {% if task.status == "todo" %}
+                    <span class="badge bg-secondary">
+                        ⏳ {{ task.get_status_display }}
                     </span>
+                {% elif task.status == "in_progress" %}
+                    <span class="badge bg-warning text-dark">
+                        🔄 {{ task.get_status_display }}
+                    </span>
+                {% elif task.status == "done" %}
+                    <span class="badge bg-success">
+                        ✅ {{ task.get_status_display }}
+                    </span>
+                {% endif %}
+
             </div>
 
+            <!-- OPIS -->
             <p class="text-muted mb-2">
                 {{ task.description }}
             </p>
 
+            <!-- DÓŁ -->
             <div class="d-flex justify-content-between align-items-center">
 
                 <small class="text-muted">
-                    Priorytet: {{ task.get_priority_display }}
+                    Priorytet:
+
+                    {% if task.priority == "low" %}
+                        <span class="badge bg-success">
+                            {{ task.get_priority_display }}
+                        </span>
+                    {% elif task.priority == "medium" %}
+                        <span class="badge bg-warning text-dark">
+                            {{ task.get_priority_display }}
+                        </span>
+                    {% elif task.priority == "high" %}
+                        <span class="badge bg-danger">
+                            {{ task.get_priority_display }}
+                        </span>
+                    {% endif %}
+
                     {% if task.due_date %}
-                    | Termin: {{ task.due_date }}
+                        | Termin: {{ task.due_date }}
+
+                        {% if task.due_date < today %}
+                            <span class="text-danger fw-bold"> (po terminie)</span>
+                        {% endif %}
                     {% endif %}
                 </small>
 
+                <!-- PRZYCISKI -->
                 <div class="d-flex gap-2">
 
-                    <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-outline-primary">
+                    <a href="{% url 'task_detail' task.id %}" class="btn btn-sm btn-primary">
                         Szczegóły
                     </a>
 
-                    <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-outline-warning">
+                    <a href="{% url 'task_edit' task.id %}" class="btn btn-sm btn-warning text-dark">
                         Edytuj
                     </a>
 
-                    <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-outline-danger">
+                    <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-danger">
                         Usuń
                     </a>
 
-                    <a href="{% url 'task_toggle' task.id %}" class="btn btn-sm btn-outline-success">
+                    <a href="{% url 'task_toggle' task.id %}" class="btn btn-sm btn-success">
                         {% if task.is_completed %}
-                        Cofnij
+                            Cofnij
                         {% else %}
-                        Zrobione
+                            Zrobione
                         {% endif %}
                     </a>
 

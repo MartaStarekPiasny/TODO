@@ -2,17 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
-
 from .forms import RegisterForm, TaskForm
 from .models import Task
-
+from datetime import date
 
 @login_required
 def index(request):
     tasks = Task.objects.filter(user=request.user).order_by("-created_at")
 
     return render(request, "tasks/index.html", {
-        "tasks": tasks
+        "tasks": tasks,
+        "today": date.today()
     })
 
 
