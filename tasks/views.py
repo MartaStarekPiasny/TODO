@@ -53,6 +53,47 @@ def task_detail(request, task_id):
         "task": task
     })
 
+@login_required
+def task_edit(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Zadanie zostało zaktualizowane.")
+            return redirect("task_detail", task_id=task.id)
+    else:
+        form = TaskForm(instance=task)
+
+    return render(request, "tasks/task_edit.html", {
+        "form": form,
+        "task": task
+    })
+
+@login_required
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+
+    if request.method == "POST":
+        task.delete()
+        messages.success(request, "Zadanie zostało usunięte.")
+        return redirect("index")
+
+    return render(request, "tasks/task_delete.html", {
+        "task": task
+    })
+
+@login_required
+def task_toggle(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+
+    task.is_completed = not task.is_completed
+    task.save()
+
+    return redirect("index")
+
 
 def register(request):
     if request.user.is_authenticated:
